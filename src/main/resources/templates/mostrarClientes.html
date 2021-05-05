@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes</title>
+</head>
+<body>
+  <header th:replace="plantilla :: header"></header>
+  <h2 th:text="#{mostrar.clientes.titulo}"></h2>
+  <a th:href="@{/}">[[#{boton.regresar}]]</a>
+  <br/><br/>
+  <table border="1">
+    <tr>
+      <th th:text="#{cliente.agregar.nombre}"></th>
+      <th th:text="#{cliente.agregar.apellido}"></th>
+      <th th:text="#{cliente.agregar.telefono}"></th>
+      <th th:text="#{boton.editar}"></th>
+      <th th:text="#{boton.eliminar}"></th>
+    </tr>
+    <tr th:each="client : ${clients}">
+      <td th:text="${client.nameClient}">Mostrar nombre</td>
+      <td th:text="${client.lastName}">Mostrar apellido</td>
+      <td th:text="${client.phone}">Mostrar telefono</td>
+      <td><a th:href="@{/editarCliente/} + ${client.idClient}" th:text="#{boton.editar}"/></td>
+      <td><a th:href="@{/eliminarCliente/} + ${client.idClient}" th:text="#{boton.eliminar}"/></td>
+    </tr>
+  </table>
+  <footer th:replace="plantilla :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservaciones</title>
+</head>
+<body>
+  <header th:replace="plantilla :: header"></header>
+  <h2 th:text="#{mostrar.reservaciones.titulo}"></h2>
+  <a th:href="@{/}">[[#{boton.regresar}]]</a>
+  <br/></br>
+  <table border="1">
+    <tr>
+      <th th:text="#{reservacion.agregar.idvehiculo}"></th>
+      <th th:text="#{reservacion.agregar.idcliente}"></th>
+      <th th:text="#{reservacion.agregar.tipo}"></th>
+      <th th:text="#{reservacion.agregar.entrega}"></th>
+      <th th:text="#{reservacion.agregar.devolucion}"></th>
+      <th th:text="#{reservacion.preciototal}"></th>
+      <th th:text="#{boton.editar}"></th>
+      <th th:text="#{boton.eliminar}"></th>
+    </tr>
+    <tr th:each="reservation : ${reservations}">
+      <td th:text="${reservation.idVehicle}">Mostrar id</td>
+      <td th:text="${reservation.idClient}">Mostrar cliente</td>
+      <td th:text="${reservation.typevehicle}">Mostrar tipo</td>
+      <td th:text="${reservation.deliverDate}">Mostrar fecha entrega</td>
+      <td th:text="${reservation.returnDate}">Mostrar fecha devolucion</td>
+      <td th:text="${reservation.totalPrice}">Mostrar precio</td>
+      <td><a th:href="@{/editarReservacion/} + ${reservation.idReservation}" th:text="Editar"/></td>
+      <td><a th:href="@{/eliminarReservacion/} + ${reservation.idReservation}" th:text="Eliminar"/></td>
+    </tr>
+  </table>
+  <footer th:replace="plantilla :: footer"></footer>
+</body>
+</html>

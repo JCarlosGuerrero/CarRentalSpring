@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Renta de autos</title>
+</head>
+<body>
+
+    <header th:replace="plantilla :: header"></header>
+    <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/agregarCliente}" th:text="#{cliente.agregar}"></a>
+    <br/><br/>
+    <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/agregarReservacion}" th:text="#{reservacion.agregar}"></a>
+    <br/><br/>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/mostrarClientes}" th:text="#{cliente.registro}"></a>
+    <br/><br/>
+    <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/mostrarReservaciones}" th:text="#{reservacion.registro}"></a>
+    <br/><br/>
+
+    <table border="1">
+        <tr>
+            <th th:text="#{vehiculo.modelo}"></th>
+            <th th:text="#{vehiculo.marca}"></th>
+            <th th:text="#{vehiculo.transmision}"></th>
+            <th th:text="#{vehiculo.tipo}"></th>
+            <th th:text="#{vehiculo.precio}"></th>
+        </tr>
+        <tr th:each="vehicle : ${vehicles}">
+            <td th:text="${vehicle.model}">Mostrar modelo</td>
+            <td th:text="${vehicle.brand}">Mostrar marca</td>
+            <td th:text="${vehicle.transmission}">Mostrar transmision</td>
+            <td th:text="${vehicle.typevehicle}">Mostrar tipo</td>
+            <td th:text="${vehicle.price}">Mostrar precio</td>
+        </tr>
+    </table>
+    <footer th:replace="plantilla :: footer"></footer>
+</body>
+</html>

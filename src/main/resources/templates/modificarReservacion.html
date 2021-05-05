@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Datos de la reservacion</title>
+</head>
+<body>
+    <header th:replace="plantilla :: header"></header>
+    <h2 th:text="#{reservacion.titulo}"></h2>
+    <a th:href="@{/}">[[#{boton.regresar}]]</a>
+
+    <form th:action="@{/guardarReservacion}" method="post" th:object="${reservation}">
+        <input type="hidden" name="idReservation" th:field="*{idReservation}">
+        <br/>
+        <label for="idVehicle" th:text="#{reservacion.agregar.idvehiculo}"></label>
+        <input type="number" name="idVehicle" th:field="*{idVehicle}">
+        <br/>
+        <label for="idClient" th:text="#{reservacion.agregar.idcliente}"></label>
+        <input type="number" name="idClient" th:field="*{idClient}">
+        <br/>
+        <label for="typevehicle" th:text="#{reservacion.agregar.tipo}"></label>
+        <input type="text" name="typevehicle" th:field="*{typevehicle}">
+        <br/>
+        <label for="deliverDate" th:text="#{reservacion.agregar.entrega}"></label>
+        <input type="date" name="deliverDate" th:field="*{deliverDate}">
+        <br/>
+        <label for="returnDate" th:text="#{reservacion.agregar.devolucion}"></label>
+        <input type="date" name="returnDate" th:field="*{returnDate}">
+        <br/>
+
+        <input type="submit" name="guardar" th:value="#{boton.guardar}">
+    </form>
+    <footer th:replace="plantilla :: footer"></footer>
+</body>
+</html>
