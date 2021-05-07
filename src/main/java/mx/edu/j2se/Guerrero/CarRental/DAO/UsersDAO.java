@@ -1,8 +1,9 @@
 package mx.edu.j2se.Guerrero.CarRental.DAO;
 
-import mx.edu.j2se.Guerrero.CarRental.Domain.Reservation;
+import mx.edu.j2se.Guerrero.CarRental.Domain.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ReservationDAO extends JpaRepository<Reservation, Long> {
+public interface UsersDAO extends JpaRepository<Users, Long> {
     //metodos personalizados como Queries concretos
+    Users findByUsername(String username);
 }

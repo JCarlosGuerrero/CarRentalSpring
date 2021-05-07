@@ -14,18 +14,23 @@
         <br/>
         <label for="idVehicle" th:text="#{reservacion.agregar.idvehiculo}"></label>
         <input type="number" name="idVehicle" th:field="*{idVehicle}">
+        <span th:if="${#fields.hasErrors('idVehicle')}" th:errors="*{idVehicle}">Error</span>
         <br/>
         <label for="idClient" th:text="#{reservacion.agregar.idcliente}"></label>
         <input type="number" name="idClient" th:field="*{idClient}">
+        <span th:if="${#fields.hasErrors('idClient')}" th:errors="*{idClient}">Error</span>
         <br/>
         <label for="typevehicle" th:text="#{reservacion.agregar.tipo}"></label>
         <input type="text" name="typevehicle" th:field="*{typevehicle}">
+        <span th:if="${#fields.hasErrors('typevehicle')}" th:errors="*{typevehicle}">Error</span>
         <br/>
         <label for="deliverDate" th:text="#{reservacion.agregar.entrega}"></label>
         <input type="date" name="deliverDate" th:field="*{deliverDate}">
+        <span th:if="${#fields.hasErrors('deliverDate')}" th:errors="*{deliverDate}">Error</span>
         <br/>
         <label for="returnDate" th:text="#{reservacion.agregar.devolucion}"></label>
         <input type="date" name="returnDate" th:field="*{returnDate}">
+        <span th:if="${#fields.hasErrors('returnDate')}" th:errors="*{returnDate}">Error</span>
         <br/>
 
         <input type="submit" name="guardar" th:value="#{boton.guardar}">

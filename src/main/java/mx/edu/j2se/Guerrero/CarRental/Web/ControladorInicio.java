@@ -1,21 +1,20 @@
 package mx.edu.j2se.Guerrero.CarRental.Web;
 
 import lombok.extern.slf4j.Slf4j;
-import mx.edu.j2se.Guerrero.CarRental.Domain.Client;
-import mx.edu.j2se.Guerrero.CarRental.Domain.Reservation;
-import mx.edu.j2se.Guerrero.CarRental.Domain.Vehicle;
-import mx.edu.j2se.Guerrero.CarRental.Service.ClientService;
-import mx.edu.j2se.Guerrero.CarRental.Service.ReservationService;
-import mx.edu.j2se.Guerrero.CarRental.Service.VehicleService;
+import mx.edu.j2se.Guerrero.CarRental.Domain.*;
+import mx.edu.j2se.Guerrero.CarRental.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 
 @Controller
@@ -30,6 +29,13 @@ public class ControladorInicio {
 
     @Autowired
     private ReservationService reservationService;
+
+    @Autowired
+    private UsersService usersService;
+
+    @Autowired
+    private RolService rolService;
+
 
     @GetMapping
     public String inicio(Model model, @AuthenticationPrincipal User user) {
@@ -72,7 +78,10 @@ public class ControladorInicio {
     }
 
     @PostMapping("/guardarCliente")
-    public String guardarC(@Valid Client client) {
+    public String guardarC(@Valid Client client, Errors errors) {
+        if(errors.hasErrors()){
+            return "modificarCliente";
+        }
         clientService.guardar(client);
         return "redirect:/";
     }
@@ -85,7 +94,13 @@ public class ControladorInicio {
     }
 
     @PostMapping("/guardarReservacion")
-    public String guardarR(Reservation reservation) {
+    public String guardarR(@Valid Reservation reservation, Errors errors) {
+        if (errors.hasErrors()){
+            return "modificarReservacion";
+        }
+
+
+        //reservation.setTotalPrice();
         reservationService.guardar(reservation);
         return "redirect:/";
     }
@@ -102,5 +117,27 @@ public class ControladorInicio {
         return "redirect:/";
     }
 
+    @GetMapping("/newUser")
+    public String addU(Users users) {
+        return "addUser";
+    }
 
+    @PostMapping("/saveuser")
+    public String saveU(Users users){
+        users.setPassword(encryptPassword(users.getPassword()));
+        usersService.guardarU(users);
+        Rol rol = new Rol();
+        rol.setName("ROLE_USER");
+        //rol.setIdUser(users.getIdUser());
+        rolService.guardarR(rol);
+        return "redirect:/";
+
+    }
+
+    public static String encryptPassword(String password){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        return encoder.encode(password);
+    }
 }
+

@@ -1,24 +1,22 @@
 package mx.edu.j2se.Guerrero.CarRental.Domain;
 
 import lombok.Data;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
-@Data
 @Entity
-@Table(name = "vehicle")
-public class Vehicle implements Serializable {
-
+@Data
+@Table(name = "rol")
+public class Rol implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idVehicle;
+    private Long idRol;
 
-    private String model;
-    private String brand;
-    private String transmission;
-    private String typevehicle;
-    private int price;
+    @NotEmpty
+    private String name;
 }

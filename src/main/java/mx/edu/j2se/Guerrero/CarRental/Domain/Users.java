@@ -3,26 +3,28 @@ package mx.edu.j2se.Guerrero.CarRental.Domain;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.List;
 
-@Data
 @Entity
-@Table(name = "client")
-public class Client implements Serializable {
-
+@Data
+@Table(name = "users")
+public class Users  implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idClient;
+    private Long idUser;
 
     @NotEmpty
-    private String nameClient;
+    private String username;
 
     @NotEmpty
-    private String lastName;
+    private String password;
 
-    @NotEmpty
-    private String phone;
+    @OneToMany
+    @JoinColumn(name = "id_user")
+    private List<Rol> roles;
 }
