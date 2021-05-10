@@ -1,30 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="plantilla :: head">
     <meta charset="UTF-8">
     <title>Clientes</title>
 </head>
 <body>
-  <header th:replace="plantilla :: header"></header>
-  <h2 th:text="#{mostrar.clientes.titulo}"></h2>
-  <a th:href="@{/}">[[#{boton.regresar}]]</a>
-  <br/><br/>
-  <table border="1">
-    <tr>
-      <th th:text="#{cliente.agregar.nombre}"></th>
-      <th th:text="#{cliente.agregar.apellido}"></th>
-      <th th:text="#{cliente.agregar.telefono}"></th>
-      <th th:text="#{boton.editar}"></th>
-      <th th:text="#{boton.eliminar}"></th>
-    </tr>
-    <tr th:each="client : ${clients}">
-      <td th:text="${client.nameClient}">Mostrar nombre</td>
-      <td th:text="${client.lastName}">Mostrar apellido</td>
-      <td th:text="${client.phone}">Mostrar telefono</td>
-      <td><a th:href="@{/editarCliente/} + ${client.idClient}" th:text="#{boton.editar}"/></td>
-      <td><a th:href="@{/eliminarCliente/} + ${client.idClient}" th:text="#{boton.eliminar}"/></td>
-    </tr>
-  </table>
+
+<header th:replace="plantilla :: header"></header>
+<h2 th:text="#{mostrar.clientes.titulo}"></h2>
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-header">
+          <h4>[[#{mostrar.clientes.titulo}]]</h4>
+        </div>
+        <div>
+          <table class="table table-stryped">
+            <thead class="thead-dark">
+            <tr>
+              <th th:text="#{cliente.agregar.nombre}"></th>
+              <th th:text="#{cliente.agregar.apellido}"></th>
+              <th th:text="#{cliente.agregar.telefono}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="client, contador : ${clients}">
+              <td>[[${client.nameClient}]]</td>
+              <td>[[${client.lastName}]]</td>
+              <td>[[${client.phone}]]</td>
+              <td>
+                  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/editarCliente/} + ${client.idClient}"
+                     class="btn btn-secondary">
+                      <i class="fas fa-angle-double-right"></i> [[#{boton.editar}]]
+                  </a>
+              </td>
+              <td>
+                  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/eliminarCliente/} + ${client.idClient}"
+                     class="btn btn-dark">
+                      <i class="fas fa-angle-double-right"></i> [[#{boton.eliminar}]]
+                      </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   <footer th:replace="plantilla :: footer"></footer>
 </body>
 </html>

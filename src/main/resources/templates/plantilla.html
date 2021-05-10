@@ -1,27 +1,79 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
+<head th:fragment="head">
   <meta charset="UTF-8">
   <title>Plantilla</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}">
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+  <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 <body>
 <header th:fragment="header">
-  <h1 th:text="#{plantilla.titulo}">Titulo</h1>
-  <a th:href="@{/newUser}">[[#{boton.newUser}]]</a>
+  <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #1F496F;">
+    <div class="container">
+      <a th:href="@{/}" class="navbar-brand" th:text="#{plantilla.titulo}"></a>
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav">
+          <li class="nav-item px-2">
+            <a th:href="@{/}" class="nav-link active" th:text="#{barra.titulo}"></a>
+          </li>
+        </ul>
+        <ul sec:authorize="isAuthenticated()" class="navbar-nav ml-auto">
+          <li class="nav-item mr-3">
+            <a href="#" class="nav-link">
+              <i class="fas fa-user"></i>
+              <span th:text="#{barra.bienvenido}">:</span>
+              <span sec:authentication="name"></span>
+              <span sec:authentication=""></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <form method="post" th:action="@{/logout}">
+              <a href="#" onclick="this.parentNode.submit();" class="nav-link">
+                <i class="fas fa-user-times"></i>[[#{barra.salir}]]
+              </a>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section id="main-header" class="py-2 bg-info text-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h1>
+            <i class="fas fa-car"></i>[[#{plantilla.titulo}]]
+          </h1>
+          <a th:href="@{/}" class="btn btn-secondary">
+            <i class="fas fa-backspace"></i>
+            [[#{boton.regresar}]]
+          </a>
+          <a th:href="@{/newUser}" class="btn btn-secondary">
+            <i class="fas fa-user-plus"></i>
+            [[#{boton.newUser}]]
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 </header>
 
-<footer th:fragment="footer">
-  <div>
-    <br>
-    <a th:href="@{/(lang=es)}">ES</a> |
-    <a th:href="@{/(lang=en)}">EN</a> |
-    <span th:text="#{plantilla.pie-pagina}">footer</span>
-    <form method="post" th:action="@{/logout}">
-      <b>User:</b><span sec:authentication="name">User Logged</span>
-      <b>Roles:</b><span sec:authentication="principal.authorities">Roles</span>
-      <a href="#" onclick="this.parentNode.submit();">Logout</a>
-    </form>
+<footer th:fragment="footer" class="bg-info text-white mt-5 p-5">
+  <div class="container">
+    <div class="col">
+      <p class="lead text-center">
+        <a th:href="@{/(lang=es)}">ES</a> |
+        <a th:href="@{/(lang=en)}">EN</a> |
+        <span th:text="#{plantilla.pie-pagina}">footer</span>
+      </p>
+    </div>
   </div>
 </footer>
 </body>

@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="plantilla :: head">
     <meta charset="UTF-8">
     <title>Datos de la reservacion</title>
 </head>
 <body>
     <header th:replace="plantilla :: header"></header>
     <h2 th:text="#{reservacion.titulo}"></h2>
-    <a th:href="@{/}">[[#{boton.regresar}]]</a>
 
     <form th:action="@{/guardarReservacion}" method="post" th:object="${reservation}">
         <input type="hidden" name="idReservation" th:field="*{idReservation}">
@@ -21,8 +20,12 @@
         <span th:if="${#fields.hasErrors('idClient')}" th:errors="*{idClient}">Error</span>
         <br/>
         <label for="typevehicle" th:text="#{reservacion.agregar.tipo}"></label>
-        <input type="text" name="typevehicle" th:field="*{typevehicle}">
-        <span th:if="${#fields.hasErrors('typevehicle')}" th:errors="*{typevehicle}">Error</span>
+        <br>
+        <input type="radio" name="typevehicle" value="c" th:field="*{typevehicle}" checked>[[#{reservacion.carro}]]
+        <br>
+        <input type="radio" name="typevehicle" value="v" th:field="*{typevehicle}">[[#{reservacion.van}]]
+        <br>
+        <input type="radio" name="typevehicle" value="s" th:field="*{typevehicle}">[[#{reservacion.sport}]]
         <br/>
         <label for="deliverDate" th:text="#{reservacion.agregar.entrega}"></label>
         <input type="date" name="deliverDate" th:field="*{deliverDate}">

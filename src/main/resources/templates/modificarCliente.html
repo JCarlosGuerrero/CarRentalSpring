@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="plantilla :: head">
     <meta charset="UTF-8">
     <title>Datos del cliente</title>
 </head>
 <body>
     <header th:replace="plantilla :: header"></header>
     <h2 th:text="#{cliente.titulo}"></h2>
-    <a th:href="@{/}">[[#{boton.regresar}]]</a>
 
     <form th:action="@{/guardarCliente}" method="post" th:object="${client}">
         <input type="hidden" name="idClient" th:field="*{idClient}">

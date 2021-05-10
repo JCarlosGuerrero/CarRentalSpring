@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>List Vehicles</title>
+</head>
+<body>
+    <section th:fragment="listVehicles" id="vehicles">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>[[#{mostrar.vehiculos.titulo}]]</h4>
+                            <a th:href="@{/findPriceOrderAsc}" class="btn btn-secondary">
+                                <i class="fas fa-sort-up"></i>
+                                [[#{vehiculo.mostrarprecio}]]
+                            </a>
+                            <a th:href="@{/findPriceOrderDesc}" class="btn btn-secondary">
+                                <i class="fas fa-sort-down"></i>
+                                [[#{vehiculo.mostrarprecio}]]
+                            </a>
+                            <a th:href="@{/findClassOrderAsc}" class="btn btn-secondary">
+                                <i class="fas fa-sort-up"></i>
+                                [[#{vehiculo.mostrarclase}]]
+                            </a>
+                            <a th:href="@{/findClassOrderDesc}" class="btn btn-secondary">
+                                <i class="fas fa-sort-down"></i>
+                                [[#{vehiculo.mostrarclase}]]
+                            </a>
+                        </div>
+                        <div>
+                            <table class="table table-stryped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th th:text="#{vehiculo.id}"></th>
+                                        <th th:text="#{vehiculo.modelo}"></th>
+                                        <th th:text="#{vehiculo.marca}"></th>
+                                        <th th:text="#{vehiculo.transmision}"></th>
+                                        <th th:text="#{vehiculo.tipo}"></th>
+                                        <th th:text="#{vehiculo.precio}"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="vehicle, contador : ${vehicles}">
+                                        <td>[[${vehicle.idVehicle}]]</td>
+                                        <td>[[${vehicle.model}]]</td>
+                                        <td>[[${vehicle.brand}]]</td>
+                                        <td>[[${vehicle.transmission}]]</td>
+                                        <td>[[${vehicle.typevehicle}]]</td>
+                                        <td>[[${new java.text.DecimalFormat('$#,###.00').format(vehicle.price)}]]</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

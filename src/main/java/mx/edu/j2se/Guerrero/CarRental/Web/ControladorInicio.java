@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.time.LocalDate;
 
-
 @Controller
 @Slf4j
 public class ControladorInicio {
@@ -42,6 +41,34 @@ public class ControladorInicio {
         Iterable<Vehicle> vehicles = vehicleService.listarVehicles();
         log.info("Ejecutando el controlador Spring MVC");
         log.info("Usuario que se registro: " + user);
+        model.addAttribute("vehicles",vehicles);
+        return "index";
+    }
+
+    @GetMapping("/findPriceOrderAsc")
+    public String findPriceAsc(Model model){
+        Iterable<Vehicle> vehicles = vehicleService.findByPriceOrderbyAsc();
+        model.addAttribute("vehicles",vehicles);
+        return "index";
+    }
+
+    @GetMapping("/findPriceOrderDesc")
+    public String findPriceDesc(Model model){
+        Iterable<Vehicle> vehicles = vehicleService.findByPriceOrderbyDesc();
+        model.addAttribute("vehicles",vehicles);
+        return "index";
+    }
+
+    @GetMapping("/findClassOrderAsc")
+    public String findClassAsc(Model model){
+        Iterable<Vehicle> vehicles = vehicleService.findByClassOrderbyAsc();
+        model.addAttribute("vehicles",vehicles);
+        return "index";
+    }
+
+    @GetMapping("/findClassOrderDesc")
+    public String findClassDesc(Model model){
+        Iterable<Vehicle> vehicles = vehicleService.findByClassOrderbyDesc();
         model.addAttribute("vehicles",vehicles);
         return "index";
     }
@@ -98,9 +125,15 @@ public class ControladorInicio {
         if (errors.hasErrors()){
             return "modificarReservacion";
         }
-
-
-        //reservation.setTotalPrice();
+        LocalDate m = reservation.getReturnDate();
+        int i = m.compareTo(reservation.getDeliverDate());
+        if (reservation.getTypevehicle().contains("c")){
+            reservation.setTotalPrice(1000 * i);
+        } else if (reservation.getTypevehicle().contains("v")){
+            reservation.setTotalPrice(1300 * i);
+        } else if (reservation.getTypevehicle().contains("s")) {
+            reservation.setTotalPrice(1500 * i);
+        }
         reservationService.guardar(reservation);
         return "redirect:/";
     }

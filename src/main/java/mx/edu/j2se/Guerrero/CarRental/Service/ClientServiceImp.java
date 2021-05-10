@@ -3,6 +3,7 @@ package mx.edu.j2se.Guerrero.CarRental.Service;
 import mx.edu.j2se.Guerrero.CarRental.DAO.ClientDAO;
 import mx.edu.j2se.Guerrero.CarRental.Domain.Client;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,4 +38,8 @@ public class ClientServiceImp implements ClientService{
     public Client encontrarClient(Client client) {
         return clientDAO.findById(client.getIdClient()).orElse(null);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Client> orderByLastNameAsc() { return clientDAO.findAll(Sort.by(Sort.Direction.ASC,"lastName")); }
 }
