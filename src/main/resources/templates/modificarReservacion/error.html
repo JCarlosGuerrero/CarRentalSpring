@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+    <a th:href="@{/agregarReservacion}" class="btn btn-secondary">
+    <i class="fas fa-backspace"></i>
+    [[#{boton.regresar}]]
+    </a>
+    <br><br>
+    Return Date must be after Deliver Date
+</body>
+</html>

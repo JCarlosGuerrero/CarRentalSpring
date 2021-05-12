@@ -10,8 +10,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3" sec:authorize="hasRole('ROLE_USER')">
-        <a th:href="@{/agregarReservacion}" class="btn btn-primary btn-block"
-           data-toggle="modal" data-target="#agregarReservacion">
+        <a th:href="@{/agregarReservacion}" class="btn btn-primary btn-block">
           <i class="fas fa-plus"></i>[[#{reservacion.agregar}]]
         </a>
       </div>

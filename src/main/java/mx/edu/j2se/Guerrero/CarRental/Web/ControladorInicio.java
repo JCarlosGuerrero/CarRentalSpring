@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import mx.edu.j2se.Guerrero.CarRental.Domain.*;
 import mx.edu.j2se.Guerrero.CarRental.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Controller
 @Slf4j
@@ -122,6 +124,10 @@ public class ControladorInicio {
 
     @PostMapping("/guardarReservacion")
     public String guardarR(@Valid Reservation reservation, Errors errors) {
+        if (reservation.getReturnDate().isBefore(reservation.getDeliverDate())){
+            //
+            return "modificarReservacion/error";
+        }
         if (errors.hasErrors()){
             return "modificarReservacion";
         }
@@ -158,11 +164,13 @@ public class ControladorInicio {
     @PostMapping("/saveuser")
     public String saveU(Users users){
         users.setPassword(encryptPassword(users.getPassword()));
-        usersService.guardarU(users);
         Rol rol = new Rol();
         rol.setName("ROLE_USER");
-        //rol.setIdUser(users.getIdUser());
         rolService.guardarR(rol);
+        ArrayList roles = new ArrayList<GrantedAuthority>();
+        roles.add(rol);
+        users.setRoles(roles);
+        usersService.guardarU(users);
         return "redirect:/";
 
     }

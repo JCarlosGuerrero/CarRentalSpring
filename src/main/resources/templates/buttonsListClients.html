@@ -10,8 +10,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3" sec:authorize="hasRole('ROLE_USER')">
-                <a th:href="@{/mostrarClientes}" class="btn btn-primary btn-block"
-                   data-toggle="modal" data-target="#mostrarClientes">
+                <a th:href="@{/mostrarClientes}" class="btn btn-primary btn-block">
                     <i class="fas fa-user-check"></i>[[#{cliente.registro}]]
                 </a>
             </div>
